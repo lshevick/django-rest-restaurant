@@ -25,12 +25,12 @@ function App() {
   const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 
 
-  const placeOrder = async () => {
+  const placeOrder = async (name, order, total) => {
 
     const data = {
-      'name': 'Levi',
-      'items': [],
-      'total': 12.00
+      'name': name,
+      'items': order,
+      'total': total,
     }
 
     const options = {
@@ -47,6 +47,7 @@ function App() {
     if (!response.ok) {
       throw new Error('Network response was not ok')
     }
+    setOrder(INITIAL_STATE)
   }
 
 

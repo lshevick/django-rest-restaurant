@@ -23,11 +23,30 @@ function App() {
 
   const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 
+
+  const placeOrder = async () => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': Cookies.get('csrftoken'),
+      },
+      // body: JSON.stringify(),
+    }
+
+    const response = await fetch('/api/v1/orders/', options).catch(handleError)
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+  }
+
+
   useEffect(() => {
     const getMenuItems = async () => {
-      const response = await fetch('/api/v1/foods/', {headers: {'Content-Type': 'applications/json'}}).catch(handleError);
+      const response = await fetch('/api/v1/foods/', { headers: { 'Content-Type': 'applications/json' } }).catch(handleError);
 
-      if(!response.ok) {
+      if (!response.ok) {
         throw new Error('Network response is not ok')
       }
 
@@ -70,7 +89,7 @@ function App() {
     <div className="App">
       <header>
         <nav className='navbar'>
-          <button className='homepage' onClick={() => setScreen('homescreen')}><FontAwesomeIcon icon={faFish} style={{color: '#B55A2B', fontSize: '3rem', marginLeft: '1rem'}} /></button>
+          <button className='homepage' onClick={() => setScreen('homescreen')}><FontAwesomeIcon icon={faFish} style={{ color: '#B55A2B', fontSize: '3rem', marginLeft: '1rem' }} /></button>
           <ul className='nav-list'>
             <li className='nav-item'><button onClick={() => setScreen('menuScreen')}>Menu</button></li>
             <li className='nav-item'><button onClick={() => setScreen('orderScreen')}>Order</button>
@@ -81,7 +100,7 @@ function App() {
 
 
       {screen === 'menuScreen' && <MenuList items={items} addToOrder={addToOrder} formatter={formatter} />}
-      {screen === 'orderScreen' && <Order order={order} removeFromOrder={removeFromOrder} formatter={formatter} />}
+      {screen === 'orderScreen' && <Order placeOrder={placeOrder} order={order} removeFromOrder={removeFromOrder} formatter={formatter} />}
       {screen === 'homescreen' && <Homescreen />}
 
 

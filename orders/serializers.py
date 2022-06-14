@@ -5,4 +5,4 @@ from .models import Order
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ('items', 'total',)
+        fields = ('__all__')

@@ -28,7 +28,6 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-    'localhost:3000',
     'django-restaurant-app-lshevick.herokuapp.com'
 ]
 
@@ -140,4 +139,4 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend/react-restaurant-app')
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'frontend/react-retaurant-app/build/static'),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'frontend/react-restaurant-app/build/static'),)

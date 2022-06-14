@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 
-const Order = ({ order, removeFromOrder, formatter }) => {
+const Order = ({ placeOrder, order, removeFromOrder, formatter }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [prevOrder, setPrevOrder] = useState([]);
 
@@ -29,7 +29,7 @@ const Order = ({ order, removeFromOrder, formatter }) => {
 
     const totalPrices = () => {
         const prices = order.reduce((acc, item) => {
-            return acc + item.price;
+            return acc + parseFloat(item.price);
         }, 0)
         return formatter.format(prices);
     }
@@ -80,7 +80,7 @@ const Order = ({ order, removeFromOrder, formatter }) => {
             </div>
             <div className="order-controls">
                 <button className='button-edit' type="button" onClick={() => isEditing ? setIsEditing(false) : setIsEditing(true)}>Edit Order</button>
-                <button className='button-place' type="button" onClick={() => updateOrder()}>Place Order</button>
+                <button className='button-place' type="button" onClick={() => placeOrder()}>Place Order</button>
 
             </div>
         </div>

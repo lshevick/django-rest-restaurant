@@ -16,6 +16,7 @@ function handleError(err) {
 
 const INITIAL_STATE = [];
 
+
 function App() {
   const [screen, setScreen] = useState('homescreen');
   const [order, setOrder] = useState(INITIAL_STATE);
@@ -25,13 +26,20 @@ function App() {
 
 
   const placeOrder = async () => {
+
+    const data = {
+      'name': 'Levi',
+      'items': [],
+      'total': 12.00
+    }
+
     const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-CSRFToken': Cookies.get('csrftoken'),
       },
-      // body: JSON.stringify(),
+      body: JSON.stringify(data),
     }
 
     const response = await fetch('/api/v1/orders/', options).catch(handleError)
@@ -66,7 +74,7 @@ function App() {
     } else {
       const index = order.findIndex((e) => e.name === orderItem.name);
       order[index].amount = order[index].amount + 1;
-      order[index].price = order[index].price + orderItem.price;
+      order[index].price = parseFloat(order[index].price) + parseFloat(orderItem.price);
     }
   }
 

@@ -81,6 +81,8 @@ const Order = ({ placeOrder, order, removeFromOrder, formatter }) => {
             <div className="order-controls">
                 <button className='button-edit' type="button" onClick={() => isEditing ? setIsEditing(false) : setIsEditing(true)}>Edit Order</button>
                 <button className='button-place' type="button" onClick={() => placeOrder()}>Place Order</button>
+                <input type="text" />
+                <button type='text'>Enter Name</button>
 
             </div>
         </div>

@@ -1,0 +1,272 @@
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  background-color: teal;
+  z-index: 10;
+}
+
+.homepage {
+  border: none;
+  background-color: teal;
+  font-style: italic;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.nav-list {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+}
+
+.nav-item {
+  position: relative;
+  margin: 0 0.1rem;
+}
+
+.nav-item button {
+  padding: 0.5rem 1rem;
+  font-size: 1.1rem;
+  border: 1px solid transparent;
+  background-color: teal;
+  cursor: pointer;
+  transition: background-color 0.05s ease-in;
+}
+
+.nav-item button:hover {
+  border-bottom: 1px solid #004545;
+}
+
+.nav-item button:active {
+  background-color: #007373;
+}
+
+.order-num {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #d71313;
+  border-radius: 50%;
+  padding: 1px 5px;
+}
+
+.main-menu ul {
+  list-style: none;
+}
+
+main {
+  padding-top: 5rem;
+}
+
+.main-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-menu div {
+  width: 100%;
+}
+
+.sub-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sub-menu ul {
+  padding: 0;
+  width: 100%;
+}
+
+.sub-menu li {
+  margin: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #555;
+}
+
+.sub-menu span {
+  display: inline-block;
+  text-align: center;
+  padding: 1rem;
+  padding-top: 2.5rem;
+}
+
+.item-name {
+  margin-bottom: 0;
+}
+
+.item-description {
+  color: #555;
+  padding: 0.5rem;
+  font-size: 0.7rem;
+}
+
+.add-item {
+  font-size: 1.1rem;
+  margin: 0 0.2rem;
+  border: none;
+  border-radius: 50%;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
+}
+
+.add-item:hover {
+  background-color: #aaa;
+  transform: scale(1.2);
+}
+
+.order-screen {
+  padding-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.order-cart ul {
+  padding: 0;
+  list-style: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.order-cart li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  border-bottom: 1px solid #333;
+}
+
+.order-total {
+  margin: 0 auto;
+  background-color: #ccc;
+  padding: 0.5rem;
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-total p,
+.order-total span {
+  font-size: 1.05rem;
+  font-weight: bolder;
+}
+
+.order-controls {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-edit, .button-place {
+  border-radius: 5px;
+  border: 1px solid #777;
+  margin: 0.5rem 1rem;
+  padding: 0.5rem;
+  font-weight: bolder;
+}
+
+.button-edit {
+  background-color: #fff;
+}
+
+.button-edit:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.button-edit:active {
+  background-color: #ddd;
+}
+
+.button-place {
+  background-color: #007373;
+  color: #eee;
+}
+
+.button-place:hover {
+  background-color: #066;
+  cursor: pointer;
+}
+
+.button-place:active {
+  background-color: #055;
+}
+
+.home-screen {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+}
+
+.home-screen img {
+  position: absolute;
+  z-index: -10;
+}
+
+.home-screen h1 {
+  font-size: 5rem;
+  padding: 2rem 1.5rem;
+  background: #045a;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+@media (min-width: 572px) {
+  main, .order-screen {
+    width: 66%;
+    margin: 0 auto;
+  }
+}
+
+.prev-order {
+  border-top: 1px solid #333;
+  margin: 0 1rem;
+  margin-top: 3rem;
+}
+
+.prev-order ul {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+} 
+
+.prev-order li {
+  display: flex;
+  justify-content: space-between;
+}
+
+.prev-order-button {
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #777;
+  margin: 0.5rem 1rem;
+  margin-left: 0;
+  padding: 0.5rem;
+  font-weight: bolder;
+}
+
+.prev-order-button:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.prev-order-button:active {
+  background-color: #ddd;
+}

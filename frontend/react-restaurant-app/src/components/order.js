@@ -1,4 +1,3 @@
-import { faBorderStyle } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 
@@ -9,11 +8,11 @@ const Order = ({ placeOrder, order, removeFromOrder, formatter }) => {
 
 
 
-    const updateOrder = () => {
-        localStorage.setItem('savedOrder', JSON.stringify(order))
-        console.log(JSON.parse(localStorage.getItem('savedOrder')));
-        return setPrevOrder(JSON.parse(localStorage.getItem('savedOrder')));
-    }
+    // const updateOrder = () => {
+    //     localStorage.setItem('savedOrder', JSON.stringify(order))
+    //     console.log(JSON.parse(localStorage.getItem('savedOrder')));
+    //     return setPrevOrder(JSON.parse(localStorage.getItem('savedOrder')));
+    // }
 
     const getPrevOrder = () => {
         console.log(JSON.parse(localStorage.getItem('savedOrder')))

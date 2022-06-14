@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'foods.apps.FoodsConfig',
     'orders.apps.OrdersConfig',
+    'frontend.apps.FrontendConfig',
 ]
 
 MIDDLEWARE = [
@@ -137,6 +138,10 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend/react-restaurant-app')
+# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'frontend/react-restaurant-app/build/static'),)
+
 
 REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend/react-restaurant-app')
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'frontend/react-restaurant-app/build/static'),)

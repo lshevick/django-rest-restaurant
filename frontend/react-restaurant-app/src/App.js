@@ -4,10 +4,14 @@ import MenuList from './components/MenuList';
 import Homescreen from './components/Homescreen';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFish } from '@fortawesome/free-solid-svg-icons';
-import DATA from './data';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 
+
+function handleError(err) {
+  console.warn(err);
+}
 
 
 const INITIAL_STATE = [];
@@ -15,8 +19,24 @@ const INITIAL_STATE = [];
 function App() {
   const [screen, setScreen] = useState('homescreen');
   const [order, setOrder] = useState(INITIAL_STATE);
+  const [items, setItems] = useState(null);
 
   const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+
+  useEffect(() => {
+    const getMenuItems = async () => {
+      const response = await fetch('/api/v1/foods/', {headers: {'Content-Type': 'applications/json'}}).catch(handleError);
+
+      if(!response.ok) {
+        throw new Error('Network response is not ok')
+      }
+
+      const data = await response.json()
+      setItems(data);
+    }
+
+    getMenuItems();
+  }, []);
 
 
   const addToOrder = (item) => {
@@ -60,7 +80,7 @@ function App() {
       </header>
 
 
-      {screen === 'menuScreen' && <MenuList DATA={DATA} addToOrder={addToOrder} formatter={formatter} />}
+      {screen === 'menuScreen' && <MenuList items={items} addToOrder={addToOrder} formatter={formatter} />}
       {screen === 'orderScreen' && <Order order={order} removeFromOrder={removeFromOrder} formatter={formatter} />}
       {screen === 'homescreen' && <Homescreen />}
 

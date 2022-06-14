@@ -1,22 +1,22 @@
 import MenuItem from './MenuItem';
 
-const MenuList = ({ DATA, addToOrder, removeFromOrder, formatter }) => {
+const MenuList = ({ items, addToOrder, removeFromOrder, formatter }) => {
 
-    const appetizers = DATA.filter((item) =>
+    const appetizers = items.filter((item) =>
         item.category === 'Appetizers'
     )
         .map((item) => (
             <MenuItem addToOrder={addToOrder} key={item.id} item={item} formatter={formatter} />
         ))
 
-    const sushi = DATA.filter((item) =>
+    const sushi = items.filter((item) =>
         item.category === 'Sushi'
     )
         .map((item) => (
             <MenuItem addToOrder={addToOrder} key={item.id} item={item} formatter={formatter} />
         ))
 
-    const dessert = DATA.filter((item) =>
+    const dessert = items.filter((item) =>
         item.category === 'Dessert'
     )
         .map((item) => (

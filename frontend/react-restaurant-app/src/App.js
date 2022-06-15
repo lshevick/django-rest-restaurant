@@ -104,8 +104,9 @@ function App() {
     setItems([...items, json])
   }
 
-  const editMenuItem = async (name, description, price, category) => {
+  const editMenuItem = async (id, name, description, price, category) => {
     const data = {
+      'id': id,
       'name': name,
       'description': description,
       'price': price,
@@ -121,7 +122,17 @@ function App() {
       body: JSON.stringify(data),
     }
 
-    const response = await fetch('/api/v1/foods/', options)
+    const response = await fetch(`/api/v1/foods/${id}/food/`, options)
+    
+    if(!response.ok) {
+      throw new Error('Network Response not ok')
+    }
+
+    const json = await response.json()
+    console.log(json)
+
+    setItems(items.map(i => i.id !== json.id ? i : json))
+
   }
 
   //   const updateOrderStatus = async (id, status) => {
@@ -203,7 +214,7 @@ function App() {
       {screen === 'menuScreen' && <MenuList items={items} addToOrder={addToOrder} formatter={formatter} />}
       {screen === 'orderScreen' && <Order placeOrder={placeOrder} order={order} removeFromOrder={removeFromOrder} formatter={formatter} />}
       {screen === 'homescreen' && <Homescreen />}
-      {screen === 'adminView' && <AdminView prevOrder={prevOrder} items={items} addMenuItem={addMenuItem} />}
+      {screen === 'adminView' && <AdminView prevOrder={prevOrder} items={items} addMenuItem={addMenuItem} editMenuItem={editMenuItem} />}
 
 
 

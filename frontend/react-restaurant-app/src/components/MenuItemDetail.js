@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-const MenuItemDetail = ({}) => {
+const MenuItemDetail = ({ id, name, category, description, price, editMenuItem }) => {
     const [isEditing, setIsEditing] = useState(false);
-    const [newName, setNewName] = useState('');
-    const [newCategory, setNewCategory] = useState('');
-    const [newDescription, setNewDescription] = useState('');
-    const [newPrice, setNewPrice] = useState('');
+    const [newName, setNewName] = useState(name);
+    const [newCategory, setNewCategory] = useState(category);
+    const [newDescription, setNewDescription] = useState(description);
+    const [newPrice, setNewPrice] = useState(price);
 
 
     const handleNewNameChange = e => setNewName(e.target.value)
@@ -14,19 +14,24 @@ const MenuItemDetail = ({}) => {
     const handleNewCategoryChange = e => setNewCategory(e.target.value)
 
     const handleSave = () => {
-        
+        editMenuItem(id, newName, newDescription, newPrice, newCategory)
+        setNewName(newName)
+        setNewCategory(newCategory)
+        setNewDescription(newDescription)
+        setNewPrice(newPrice)
+        setIsEditing(false)
     }
 
 
     const editMenuItems = (
-        <li key={item.id}>
+        <li key={id}>
             <div className="menu-item-info">
-                <input type="text" autoComplete='off' value={newCategory} onChange={handleNewCategoryChange} placeholder={item.category} />
-                <input type="text" autoComplete='off' value={newName} onChange={handleNewNameChange} placeholder={item.name} />
-                <input type="text" autoComplete='off' value={newDescription} onChange={handleNewDescriptionChange} placeholder={item.description} />
+                <input type="text" autoComplete='off' name={category} id={category} value={newCategory} onChange={handleNewCategoryChange} />
+                <input type="text" autoComplete='off' name={name} id={name} value={newName} onChange={handleNewNameChange} />
+                <input type="text" autoComplete='off' name={description} id={description} value={newDescription} onChange={handleNewDescriptionChange} />
             </div>
             <span>
-                <input type="text" autoComplete='off' value={newPrice} onChange={handleNewPriceChange} placeholder={item.price} />
+                <input type="text" autoComplete='off' name={price} id={price} value={newPrice} onChange={handleNewPriceChange} />
             </span>
             <button type='button' onClick={() => handleSave()}>Save</button>
             <button type='button' onClick={() => setIsEditing(false)}>Cancel</button>
@@ -34,16 +39,23 @@ const MenuItemDetail = ({}) => {
     )
 
     const menuItem = (
-        <li key={item.id}>
+        <li key={id}>
             <div className="menu-item-info">
-                <p>{item.category}</p>
-                <p className='item-info-name'>{item.name}</p>
-                <p className='item-info-description'>{item.description}</p>
+                <p>{category}</p>
+                <p className='item-info-name'>{name}</p>
+                <p className='item-info-description'>{description}</p>
             </div>
             <button type='button' onClick={() => setIsEditing(true)}>Edit</button>
-            <span>${item.price}</span>
+            <span>${price}</span>
         </li>
     )
 
+    return (
+        <ul>
+            {isEditing ? editMenuItems : menuItem}
+        </ul>
+    )
 
 }
+
+export default MenuItemDetail

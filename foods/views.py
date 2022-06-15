@@ -7,3 +7,8 @@ from .serializers import FoodSerializer
 class FoodListAPIView(generics.ListCreateAPIView):
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
+
+class FoodDetailAPIView(generics.RetrieveUpdateAPIView):
+    queryset = Food.objects.all()
+    serializer_class = FoodSerializer
+    

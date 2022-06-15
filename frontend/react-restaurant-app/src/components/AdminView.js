@@ -1,63 +1,11 @@
 import { useState } from 'react';
+import MenuItemDetail from './MenuItemDetail';
 
-const AdminView = ({ updateOrderStatus, items, prevOrder, addMenuItem }) => {
+const AdminView = ({ updateOrderStatus, items, prevOrder, addMenuItem, editMenuItem }) => {
     const [name, setName] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
-    const [isEditing, setIsEditing] = useState(false);
-    const [newName, setNewName] = useState('');
-    const [newCategory, setNewCategory] = useState('');
-    const [newDescription, setNewDescription] = useState('');
-    const [newPrice, setNewPrice] = useState('');
-
-
-
-
-
-
-
-    // const handleComplete = (id, bool) => {
-    //      updateOrderStatus(id, bool)
-    // }
-
-    
-    const handleNewNameChange = e => setNewName(e.target.value)
-    const handleNewDescriptionChange = e => setNewDescription(e.target.value)
-    const handleNewPriceChange = e => setNewPrice(e.target.value)
-    const handleNewCategoryChange = e => setNewCategory(e.target.value)
-
-    const handleSave = () => {
-        
-    }
-
-
-    const editMenuItems = items.map(item => (
-        <li key={item.id}>
-            <div className="menu-item-info">
-                <input type="text" autoComplete='off' value={newCategory} onChange={handleNewCategoryChange} placeholder={item.category} />
-                <input type="text" autoComplete='off' value={newName} onChange={handleNewNameChange} placeholder={item.name} />
-                <input type="text" autoComplete='off' value={newDescription} onChange={handleNewDescriptionChange} placeholder={item.description} />
-            </div>
-            <span>
-                <input type="text" autoComplete='off' value={newPrice} onChange={handleNewPriceChange} placeholder={item.price} />
-            </span>
-            <button type='button' onClick={() => handleSave()}>Save</button>
-            <button type='button' onClick={() => setIsEditing(false)}>Cancel</button>
-        </li>
-    ))
-
-    const menuItems = items.map(item => (
-        <li key={item.id}>
-            <div className="menu-item-info">
-                <p>{item.category}</p>
-                <p className='item-info-name'>{item.name}</p>
-                <p className='item-info-description'>{item.description}</p>
-            </div>
-            <button type='button' onClick={() => setIsEditing(true)}>Edit</button>
-            <span>${item.price}</span>
-        </li>
-    ))
 
     const openOrders =
         prevOrder.map((item) => (
@@ -69,6 +17,11 @@ const AdminView = ({ updateOrderStatus, items, prevOrder, addMenuItem }) => {
                 <button type="button" name="complete" id="complete" >Complete</button>
             </li>
         ))
+
+    const menuItemsList = items.map(item => <MenuItemDetail
+            key={item.id} {...item}
+            editMenuItem={editMenuItem}
+        />)
 
 
     const handleNameChange = e => setName(e.target.value)
@@ -103,7 +56,7 @@ const AdminView = ({ updateOrderStatus, items, prevOrder, addMenuItem }) => {
             <div className="menu-item-section">
                 <h1>Menu</h1>
                 <ul>
-                    {isEditing ? editMenuItems : menuItems}
+                    {menuItemsList}
                 </ul>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="item-name"></label>

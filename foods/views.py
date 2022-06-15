@@ -4,6 +4,6 @@ from .models import Food
 from .serializers import FoodSerializer
 # Create your views here.
 
-class FoodListAPIView(generics.ListAPIView):
+class FoodListAPIView(generics.ListCreateAPIView):
     queryset = Food.objects.all()
     serializer_class = FoodSerializer

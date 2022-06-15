@@ -3,30 +3,7 @@ import { useState } from "react";
 
 const Order = ({ placeOrder, order, removeFromOrder, formatter }) => {
     const [isEditing, setIsEditing] = useState(false);
-    const [prevOrder, setPrevOrder] = useState([]);
     const [name, setName] = useState('');
-
-
-
-    // const updateOrder = () => {
-    //     localStorage.setItem('savedOrder', JSON.stringify(order))
-    //     console.log(JSON.parse(localStorage.getItem('savedOrder')));
-    //     return setPrevOrder(JSON.parse(localStorage.getItem('savedOrder')));
-    // }
-
-    const getPrevOrder = () => {
-        console.log(JSON.parse(localStorage.getItem('savedOrder')))
-        return setPrevOrder(JSON.parse(localStorage.getItem('savedOrder')));
-    }
-
-    const prevOrders = (
-        prevOrder.map((item) => (
-            <li key={item.name}>
-                <p>{item.amount}  {item.name}</p>
-                <span>{formatter.format(item.price)}</span>
-            </li>
-        ))
-    )
 
     const totalPrices = () => {
         const prices = order.reduce((acc, item) => {
@@ -101,13 +78,6 @@ const Order = ({ placeOrder, order, removeFromOrder, formatter }) => {
                 </form>
 
             </div>
-        </div>
-        <div className="prev-order">
-            <h2>Previous Order</h2>
-            <button className="prev-order-button" type='button' onClick={() => getPrevOrder()}>See Previous Order</button>
-            <ul>
-                {prevOrders}
-            </ul>
         </div>
     </div>;
 }

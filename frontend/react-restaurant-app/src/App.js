@@ -23,12 +23,33 @@ function App() {
   const [order, setOrder] = useState(INITIAL_STATE);
   const [items, setItems] = useState(null);
   const [prevOrder, setPrevOrder] = useState([]);
-
+  
   const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+  
+  
+  const getPrevOrders = async () => {
+    const response = await fetch('/api/v1/orders/', { headers: { 'Content-Type': 'applications/json' } }).catch(handleError)
 
+    if(!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+
+    const data = await response.json()
+    setPrevOrder(data);
+  }
+
+  const getMenuItems = async () => {
+    const response = await fetch('/api/v1/foods/', { headers: { 'Content-Type': 'applications/json' } }).catch(handleError);
+
+    if (!response.ok) {
+      throw new Error('Network response is not ok')
+    }
+
+    const data = await response.json()
+    setItems(data);
+  }
 
   const placeOrder = async (name, order, total) => {
-
     const data = {
       'name': name,
       'items': order,
@@ -50,16 +71,20 @@ function App() {
       throw new Error('Network response was not ok')
     }
     setOrder(INITIAL_STATE)
+    getPrevOrders()
   }
 
 
-    const updateOrderStatus = async (id, status) => {
-      const data = {
-      'completed': status
+  const addMenuItem = async (name, description, price, category) => {
+    const data = {
+      'name': name,
+      'description': description,
+      'price': price,
+      'category': category,
     }
-    
+
     const options = {
-      method: 'PUT',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-CSRFToken': Cookies.get('csrftoken'),
@@ -67,41 +92,44 @@ function App() {
       body: JSON.stringify(data),
     }
 
-    const response = await fetch(`/api/v1/orders/${id}/order/`, options).catch(handleError)
+    const response = await fetch('/api/v1/foods/', options).catch(handleError)
 
     if(!response.ok) {
-      throw new Error('Network response was not ok')
+      throw new Error('Network Response not ok')
     }
-    
+
+    setItems([...items, response])
+    getMenuItems()
   }
 
+  //   const updateOrderStatus = async (id, status) => {
+  //     const data = {
+  //     'completed': status
+  //   }
+    
+  //   const options = {
+  //     method: 'PUT',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'X-CSRFToken': Cookies.get('csrftoken'),
+  //     },
+  //     body: JSON.stringify(data),
+  //   }
+
+  //   const response = await fetch(`/api/v1/orders/${id}/order/`, options).catch(handleError)
+
+  //   if(!response.ok) {
+  //     throw new Error('Network response was not ok')
+  //   }
+    
+  // }
+
   useEffect(() => {
-    const getPrevOrders = async () => {
-      const response = await fetch('/api/v1/orders/', { headers: { 'Content-Type': 'applications/json' } }).catch(handleError)
-
-      if(!response.ok) {
-        throw new Error('Network response was not ok')
-      }
-
-      const data = await response.json()
-      setPrevOrder(data);
-    }
     getPrevOrders()
   }, [])
 
 
   useEffect(() => {
-    const getMenuItems = async () => {
-      const response = await fetch('/api/v1/foods/', { headers: { 'Content-Type': 'applications/json' } }).catch(handleError);
-
-      if (!response.ok) {
-        throw new Error('Network response is not ok')
-      }
-
-      const data = await response.json()
-      setItems(data);
-    }
-
     getMenuItems();
   }, []);
 
@@ -153,7 +181,7 @@ function App() {
       {screen === 'menuScreen' && <MenuList items={items} addToOrder={addToOrder} formatter={formatter} />}
       {screen === 'orderScreen' && <Order placeOrder={placeOrder} order={order} removeFromOrder={removeFromOrder} formatter={formatter} />}
       {screen === 'homescreen' && <Homescreen />}
-      {screen === 'adminView' && <AdminView updateOrderStatus={updateOrderStatus} prevOrder={prevOrder} items={items} formatter={formatter} />}
+      {screen === 'adminView' && <AdminView prevOrder={prevOrder} items={items} addMenuItem={addMenuItem} />}
 
 
 

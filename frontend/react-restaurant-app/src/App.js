@@ -70,8 +70,8 @@ function App() {
     if (!response.ok) {
       throw new Error('Network response was not ok')
     }
+    
     setOrder(INITIAL_STATE)
-    getPrevOrders()
   }
 
 
@@ -98,8 +98,30 @@ function App() {
       throw new Error('Network Response not ok')
     }
 
-    setItems([...items, response])
-    getMenuItems()
+    const json = await response.json();
+    console.log(json);
+
+    setItems([...items, json])
+  }
+
+  const editMenuItem = async (name, description, price, category) => {
+    const data = {
+      'name': name,
+      'description': description,
+      'price': price,
+      'category': category,
+    }
+
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': Cookies.get('csrftoken'),
+      },
+      body: JSON.stringify(data),
+    }
+
+    const response = await fetch('/api/v1/foods/', options)
   }
 
   //   const updateOrderStatus = async (id, status) => {

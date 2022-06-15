@@ -348,8 +348,12 @@ main {
   padding: 0.4rem;
 }
 
+.menu-item-edits {
+  display: flex;
+}
+
 .menu-item-section button {
-  margin: 0 1rem;
-  width: 25%;
+  margin: 1rem;
+  width: 50%;
   align-self: flex-end;
 }

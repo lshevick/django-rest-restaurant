@@ -29,10 +29,8 @@ const MenuItemDetail = ({ id, name, category, description, price, editMenuItem }
                 <input type="text" autoComplete='off' name={category} id={category} value={newCategory} onChange={handleNewCategoryChange} />
                 <input type="text" autoComplete='off' name={name} id={name} value={newName} onChange={handleNewNameChange} />
                 <input type="text" autoComplete='off' name={description} id={description} value={newDescription} onChange={handleNewDescriptionChange} />
-            </div>
-            <span>
                 <input type="text" autoComplete='off' name={price} id={price} value={newPrice} onChange={handleNewPriceChange} />
-            </span>
+            </div>
             <button type='button' onClick={() => handleSave()}>Save</button>
             <button type='button' onClick={() => setIsEditing(false)}>Cancel</button>
         </li>
@@ -45,15 +43,18 @@ const MenuItemDetail = ({ id, name, category, description, price, editMenuItem }
                 <p className='item-info-name'>{name}</p>
                 <p className='item-info-description'>{description}</p>
             </div>
+
+            <div className='menu-item-edits'>
             <button type='button' onClick={() => setIsEditing(true)}>Edit</button>
             <span>${price}</span>
+            </div>
         </li>
     )
 
     return (
-        <ul>
+        <>
             {isEditing ? editMenuItems : menuItem}
-        </ul>
+        </>
     )
 
 }

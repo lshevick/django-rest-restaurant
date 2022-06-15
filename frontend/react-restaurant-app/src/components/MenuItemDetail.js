@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
-const MenuItemDetail = ({ id, name, category, description, price, editMenuItem }) => {
+const MenuItemDetail = ({ id, name, category, description, price, active, editMenuItem }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [newName, setNewName] = useState(name);
     const [newCategory, setNewCategory] = useState(category);
     const [newDescription, setNewDescription] = useState(description);
     const [newPrice, setNewPrice] = useState(price);
+    const [isActive, setIsActive] = useState(active);
 
 
     const handleNewNameChange = e => setNewName(e.target.value)
@@ -14,7 +15,7 @@ const MenuItemDetail = ({ id, name, category, description, price, editMenuItem }
     const handleNewCategoryChange = e => setNewCategory(e.target.value)
 
     const handleSave = () => {
-        editMenuItem(id, newName, newDescription, newPrice, newCategory)
+        editMenuItem(id, newName, newDescription, newPrice, newCategory, isActive)
         setNewName(newName)
         setNewCategory(newCategory)
         setNewDescription(newDescription)
@@ -31,6 +32,10 @@ const MenuItemDetail = ({ id, name, category, description, price, editMenuItem }
                 <input type="text" autoComplete='off' name={description} id={description} value={newDescription} onChange={handleNewDescriptionChange} />
                 <input type="text" autoComplete='off' name={price} id={price} value={newPrice} onChange={handleNewPriceChange} />
             </div>
+            <label htmlFor="active">Active</label>
+            <input type="checkbox" defaultChecked={isActive} onChange={() => {
+                setIsActive(!isActive)
+                }} />
             <button type='button' onClick={() => handleSave()}>Save</button>
             <button type='button' onClick={() => setIsEditing(false)}>Cancel</button>
         </li>

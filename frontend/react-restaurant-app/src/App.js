@@ -104,13 +104,14 @@ function App() {
     setItems([...items, json])
   }
 
-  const editMenuItem = async (id, name, description, price, category) => {
+  const editMenuItem = async (id, name, description, price, category, active) => {
     const data = {
       'id': id,
       'name': name,
       'description': description,
       'price': price,
       'category': category,
+      'active': active,
     }
 
     const options = {
@@ -129,33 +130,36 @@ function App() {
     }
 
     const json = await response.json()
-    console.log(json)
 
     setItems(items.map(i => i.id !== json.id ? i : json))
 
   }
 
-  //   const updateOrderStatus = async (id, status) => {
-  //     const data = {
-  //     'completed': status
-  //   }
+    const updateOrderStatus = async (id, status) => {
+      const data = {
+        'id': id,
+      'completed': status
+    }
     
-  //   const options = {
-  //     method: 'PUT',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'X-CSRFToken': Cookies.get('csrftoken'),
-  //     },
-  //     body: JSON.stringify(data),
-  //   }
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': Cookies.get('csrftoken'),
+      },
+      body: JSON.stringify(data),
+    }
 
-  //   const response = await fetch(`/api/v1/orders/${id}/order/`, options).catch(handleError)
+    const response = await fetch(`/api/v1/orders/${id}/order/`, options).catch(handleError)
 
-  //   if(!response.ok) {
-  //     throw new Error('Network response was not ok')
-  //   }
+    if(!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+
+    const json = await response.json()
+    console.log(json)
     
-  // }
+  }
 
   useEffect(() => {
     getPrevOrders()
@@ -214,7 +218,7 @@ function App() {
       {screen === 'menuScreen' && <MenuList items={items} addToOrder={addToOrder} formatter={formatter} />}
       {screen === 'orderScreen' && <Order placeOrder={placeOrder} order={order} removeFromOrder={removeFromOrder} formatter={formatter} />}
       {screen === 'homescreen' && <Homescreen />}
-      {screen === 'adminView' && <AdminView prevOrder={prevOrder} items={items} addMenuItem={addMenuItem} editMenuItem={editMenuItem} />}
+      {screen === 'adminView' && <AdminView prevOrder={prevOrder} items={items} addMenuItem={addMenuItem} editMenuItem={editMenuItem} updateOrderStatus={updateOrderStatus} />}
 
 
 

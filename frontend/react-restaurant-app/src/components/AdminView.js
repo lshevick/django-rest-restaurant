@@ -14,9 +14,10 @@ const AdminView = ({ updateOrderStatus, items, prevOrder, addMenuItem, editMenuI
                     <p>{item.name}</p>
                     <span>${item.total}</span>
                 </div>
-                <button type="button" name="complete" id="complete" >Complete</button>
+                <button type="button" name="complete" id="complete" onClick={() => updateOrderStatus(item.id, true)} >Complete</button>
             </li>
         ))
+
 
     const menuItemsList = items.map(item => <MenuItemDetail
             key={item.id} {...item}
@@ -50,7 +51,6 @@ const AdminView = ({ updateOrderStatus, items, prevOrder, addMenuItem, editMenuI
                 <ul className="open-orders">
                     {openOrders}
                 </ul>
-
             </div>
 
             <div className="menu-item-section">

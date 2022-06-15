@@ -2,6 +2,7 @@ import './App.css';
 import Order from './components/order';
 import MenuList from './components/MenuList';
 import Homescreen from './components/Homescreen';
+import AdminView from './components/AdminView';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFish } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
@@ -21,6 +22,7 @@ function App() {
   const [screen, setScreen] = useState('homescreen');
   const [order, setOrder] = useState(INITIAL_STATE);
   const [items, setItems] = useState(null);
+  const [prevOrder, setPrevOrder] = useState([]);
 
   const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 
@@ -49,6 +51,43 @@ function App() {
     }
     setOrder(INITIAL_STATE)
   }
+
+
+    const updateOrderStatus = async (id, status) => {
+      const data = {
+      'completed': status
+    }
+    
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': Cookies.get('csrftoken'),
+      },
+      body: JSON.stringify(data),
+    }
+
+    const response = await fetch(`/api/v1/orders/${id}/order/`, options).catch(handleError)
+
+    if(!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+    
+  }
+
+  useEffect(() => {
+    const getPrevOrders = async () => {
+      const response = await fetch('/api/v1/orders/', { headers: { 'Content-Type': 'applications/json' } }).catch(handleError)
+
+      if(!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+
+      const data = await response.json()
+      setPrevOrder(data);
+    }
+    getPrevOrders()
+  }, [])
 
 
   useEffect(() => {
@@ -103,6 +142,9 @@ function App() {
             <li className='nav-item'><button onClick={() => setScreen('menuScreen')}>Menu</button></li>
             <li className='nav-item'><button onClick={() => setScreen('orderScreen')}>Order</button>
               {checkOrder}</li>
+              <li className='nav-item nav-item-admin'>
+                <button onClick={() => setScreen('adminView')}>Admin</button>
+              </li>
           </ul>
         </nav>
       </header>
@@ -111,6 +153,7 @@ function App() {
       {screen === 'menuScreen' && <MenuList items={items} addToOrder={addToOrder} formatter={formatter} />}
       {screen === 'orderScreen' && <Order placeOrder={placeOrder} order={order} removeFromOrder={removeFromOrder} formatter={formatter} />}
       {screen === 'homescreen' && <Homescreen />}
+      {screen === 'adminView' && <AdminView updateOrderStatus={updateOrderStatus} prevOrder={prevOrder} items={items} formatter={formatter} />}
 
 
 

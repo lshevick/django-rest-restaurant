@@ -357,3 +357,26 @@ main {
   width: 50%;
   align-self: flex-end;
 }
+
+#toggle {
+  position: absolute;
+  top: -100%;
+  left: -100%;
+}
+
+.complete-button-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.completed-button {
+  cursor: pointer;
+  height: 25%;
+  padding: 0.5rem;
+  background-color: #078;
+}
+
+#toggle:checked ~ .completed-button {
+  background-color: #fff;
+  transform: scale(1.3);
+}

@@ -70,7 +70,10 @@ function App() {
     if (!response.ok) {
       throw new Error('Network response was not ok')
     }
-    
+
+    const json = await response.json()
+
+    setPrevOrder([...prevOrder, json])
     setOrder(INITIAL_STATE)
   }
 
@@ -159,6 +162,7 @@ function App() {
     const json = await response.json()
     console.log(json)
     
+    setPrevOrder(prevOrder.map(i => i.id !== json.id ? i : json))
   }
 
   useEffect(() => {

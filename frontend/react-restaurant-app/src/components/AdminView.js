@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import MenuItemDetail from './MenuItemDetail';
+import OrderItemDetail from './OrderItemDetail';
 
 const AdminView = ({ updateOrderStatus, items, prevOrder, addMenuItem, editMenuItem }) => {
     const [name, setName] = useState('');
@@ -8,21 +9,16 @@ const AdminView = ({ updateOrderStatus, items, prevOrder, addMenuItem, editMenuI
     const [price, setPrice] = useState('');
 
     const openOrders =
-        prevOrder.map((item) => (
-            <li key={item.id}>
-                <div className="item-info">
-                    <p>{item.name}</p>
-                    <span>${item.total}</span>
-                </div>
-                <button type="button" name="complete" id="complete" onClick={() => updateOrderStatus(item.id, true)} >Complete</button>
-            </li>
-        ))
+        prevOrder.map((order) => <OrderItemDetail
+            key={order.id} {...order}
+            updateOrderStatus={updateOrderStatus}
+        />)
 
 
     const menuItemsList = items.map(item => <MenuItemDetail
-            key={item.id} {...item}
-            editMenuItem={editMenuItem}
-        />)
+        key={item.id} {...item}
+        editMenuItem={editMenuItem}
+    />)
 
 
     const handleNameChange = e => setName(e.target.value)
